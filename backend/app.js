@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
-const Thing = require('./models/Thing');
+const saucesRoutes = require('./routes/sauces')
 
 const userRoutes = require('./routes/user');
 
@@ -26,29 +26,9 @@ app.use((req, res, next) => {
 });
 
 
-app.post('/api/sauces', (req, res, next) => {
-  delete req.body._id;
-  const thing = new Thing({
-    ...req.body
-  });
-  thing.save()
-    .then(() => res.status(201).json({
-      message: 'objet enregistré'
-    }))
-    .catch(error => res.status(400).json({
-      error
-    }));
-});
-
-app.get('/api/sauces', (req, res, next) => {
-Thing.find()
-.then(things => res.status(200).json(things))
-.catch(error => res.status(400).json({error}));
-});
-
 
 
 app.use('/api/auth', userRoutes);
-
+app.use('/api/sauces', saucesRoutes);
 
 module.exports = app;
