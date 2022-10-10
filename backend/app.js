@@ -6,7 +6,7 @@ const Thing = require('./models/Thing');
 const userRoutes = require('./routes/user');
 
 const app = express();
-mongoose.connect('mongodb+srv://Tb:R5ki8pWpKj8rS-a-@cluster0.4pijbyd.mongodb.net/?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://No:WklhHiOlR48i5-rt@cluster0.4pijbyd.mongodb.net/?retryWrites=true&w=majority', {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -32,7 +32,7 @@ app.post('/api/sauces', (req, res, next) => {
     ...req.body
   });
   thing.save()
-    .then(() => res.status(201).jsonj({
+    .then(() => res.status(201).json({
       message: 'objet enregistré'
     }))
     .catch(error => res.status(400).json({
