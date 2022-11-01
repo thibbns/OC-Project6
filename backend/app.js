@@ -1,12 +1,15 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
+const helmet = require('helmet')
 const saucesRoutes = require('./routes/sauces')
 
 const userRoutes = require('./routes/user');
 
 const app = express();
-mongoose.connect('mongodb+srv://No:WklhHiOlR48i5-rt@cluster0.4pijbyd.mongodb.net/?retryWrites=true&w=majority', {
+const dotenv = require('dotenv').config('./.env');
+
+mongoose.connect(`mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_CLUSTER_NAME}.mongodb.net/?retryWrites=true&w=majority`, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
@@ -14,6 +17,9 @@ mongoose.connect('mongodb+srv://No:WklhHiOlR48i5-rt@cluster0.4pijbyd.mongodb.net
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 app.use(express.json());
+
+app.use(helmet.crossOriginResourcePolicy({policy:"cross-origin"}));
+
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
